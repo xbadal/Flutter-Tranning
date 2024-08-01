@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           SettingRowWidget(
-            title: "Change Theme fjhsv hfhfhf hfhfhf fhfhfh fhfhfh fhfhhf fhfhhf fhfhfh hfhfhfh",
+            title: "Change Theme",
             prefixIcon: Icon(
               Icons.color_lens,
               color: Colors.grey,
