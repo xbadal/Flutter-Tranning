@@ -6,8 +6,11 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return const SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           SettingRowWidget(
             title: "Change password",
@@ -40,21 +43,21 @@ class SettingsPage extends StatelessWidget {
 
   _settingRow(String title) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.lock,
             color: Colors.grey,
             size: 32,
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           Text(
             title,
-            style: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w600),
+            style: const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w600),
           ),
         ],
       ),

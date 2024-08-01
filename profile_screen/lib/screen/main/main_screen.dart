@@ -66,10 +66,7 @@ class _MainScreenState extends State<MainScreen> {
       case 2:
         return const ProfileScreen();
       case 3:
-        return Container(
-          alignment: Alignment.center,
-          child: SettingsPage(),
-        );
+        return SettingsPage();
       default:
         return Container(
           alignment: Alignment.center,
