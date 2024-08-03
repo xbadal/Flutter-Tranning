@@ -90,22 +90,19 @@ class ChatScreen extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return Container(
-                  margin: const EdgeInsets.only(right: 8.0),
+                  margin: const EdgeInsets.only(right: 8.0, left: 4),
                   height: 60,
                   width: 60,
-                  color: Colors.pink,
                   child: Stack(
                     children: [
-                      Positioned.fill(
-                          child: Image.network(
-                        chatList[index].profilePhoto,
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      )),
+                      CircleAvatar(
+                        backgroundColor: Colors.brown,
+                        radius: 35,
+                        foregroundImage: NetworkImage(chatList[index].profilePhoto),
+                      ),
                       const Positioned(
-                        bottom: 5.0,
-                        right: 5.0,
+                        bottom: 8.0,
+                        right: 8.0,
                         child: Icon(
                           Icons.circle,
                           color: Colors.green,

@@ -9,15 +9,16 @@ class ChatRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey, width: 0.5))),
       child: Row(
         children: [
-          Image.network(
-            chatModel.profilePhoto,
-            height: 50,
-            width: 50,
+          CircleAvatar(
+            backgroundColor: Colors.brown,
+            radius: 35,
+            foregroundImage: NetworkImage(chatModel.profilePhoto),
           ),
-          SizedBox(
+          const SizedBox(
             width: 16.0,
           ),
           Expanded(
