@@ -82,7 +82,7 @@ class ChatScreen extends StatelessWidget {
             "Online",
             style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           SizedBox(
@@ -117,8 +117,9 @@ class ChatScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
             ),
           ),
-          const SizedBox(
-            height: 16.0,
+          const Padding(
+            padding: EdgeInsets.only(top: 16, bottom: 16),
+            child: Divider(),
           ),
           const Text(
             "Chat",
