@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile_screen/screen/chat/chat_screen.dart';
 import 'package:profile_screen/screen/home/home_page.dart';
 import 'package:profile_screen/screen/profile/profile_screen.dart';
 
@@ -58,11 +59,7 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         return const HomePage();
       case 1:
-        return Container(
-          alignment: Alignment.center,
-          child: const Text("This is Chat"),
-        );
-
+        return ChatScreen();
       case 2:
         return const ProfileScreen();
       case 3:
