@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profile_screen/screen/chat/chat_screen.dart';
 import 'package:profile_screen/screen/home/home_page.dart';
+import 'package:profile_screen/screen/main/widget/drawer_menu_row.dart';
 import 'package:profile_screen/screen/profile/profile_screen.dart';
 
 import '../setting/settings_page.dart';
@@ -36,6 +37,32 @@ class _MainScreenState extends State<MainScreen> {
               ))
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            Container(
+              height: 200,
+              color: Colors.pink,
+            ),
+            const DrawerMenuRow(
+              title: 'Home',
+              prefixIcon: Icon(Icons.home),
+            ),
+            const DrawerMenuRow(
+              title: 'Profile',
+              prefixIcon: Icon(Icons.person),
+            ),
+            const DrawerMenuRow(
+              title: 'Settings',
+              prefixIcon: Icon(Icons.settings),
+            ),
+            const DrawerMenuRow(
+              title: 'Logout',
+              prefixIcon: Icon(Icons.exit_to_app),
+            ),
+          ],
+        ),
+      ),
       body: _getPage(),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -49,7 +76,8 @@ class _MainScreenState extends State<MainScreen> {
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Chats"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Setting"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "Setting"),
           ]),
     );
   }
@@ -63,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
       case 2:
         return const ProfileScreen();
       case 3:
-        return SettingsPage();
+        return const SettingsPage();
       default:
         return Container(
           alignment: Alignment.center,

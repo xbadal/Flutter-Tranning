@@ -70,72 +70,85 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 16.0,
-          ),
-          const Text(
-            "Online",
-            style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          SizedBox(
-            height: 60,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 8.0, left: 4),
-                  height: 60,
-                  width: 60,
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.brown,
-                        radius: 35,
-                        foregroundImage: NetworkImage(chatList[index].profilePhoto),
-                      ),
-                      const Positioned(
-                        bottom: 8.0,
-                        right: 8.0,
-                        child: Icon(
-                          Icons.circle,
-                          color: Colors.green,
-                          size: 15.0,
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print("FloatingActionButton Clicked");
+        },
+        backgroundColor: Colors.pink,
+        child: const Icon(
+          Icons.chat,
+          color: Colors.white,
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 16.0,
+            ),
+            const Text(
+              "Online",
+              style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            SizedBox(
+              height: 60,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 8.0, left: 4),
+                    height: 60,
+                    width: 60,
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.brown,
+                          radius: 35,
+                          foregroundImage:
+                              NetworkImage(chatList[index].profilePhoto),
                         ),
-                      )
-                    ],
-                  ),
+                        const Positioned(
+                          bottom: 8.0,
+                          right: 8.0,
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.green,
+                            size: 15.0,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+                itemCount: chatList.length,
+                scrollDirection: Axis.horizontal,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 16, bottom: 16),
+              child: Divider(),
+            ),
+            const Text(
+              "Chat",
+              style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600),
+            ),
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return ChatRowWidget(
+                  chatModel: chatList[index],
                 );
               },
               itemCount: chatList.length,
-              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 16, bottom: 16),
-            child: Divider(),
-          ),
-          const Text(
-            "Chat",
-            style: TextStyle(color: Colors.pink, fontWeight: FontWeight.w600),
-          ),
-          ListView.builder(
-            itemBuilder: (context, index) {
-              return ChatRowWidget(
-                chatModel: chatList[index],
-              );
-            },
-            itemCount: chatList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
