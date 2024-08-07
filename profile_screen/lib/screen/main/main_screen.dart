@@ -7,7 +7,9 @@ import 'package:profile_screen/screen/profile/profile_screen.dart';
 import '../setting/settings_page.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final String email;
+
+  MainScreen({super.key, required this.email});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -43,6 +45,7 @@ class _MainScreenState extends State<MainScreen> {
             Container(
               height: 200,
               color: Colors.pink,
+              child: Text(widget.email),
             ),
             const DrawerMenuRow(
               title: 'Home',
