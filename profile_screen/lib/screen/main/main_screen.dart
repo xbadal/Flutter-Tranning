@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:profile_screen/screen/chat/chat_screen.dart';
 import 'package:profile_screen/screen/home/home_page.dart';
+import 'package:profile_screen/screen/login/login_screen.dart';
 import 'package:profile_screen/screen/main/widget/drawer_menu_row.dart';
 import 'package:profile_screen/screen/profile/profile_screen.dart';
 
+import '../../style/text_style.dart';
 import '../setting/settings_page.dart';
 
 class MainScreen extends StatefulWidget {
   final String email;
 
-  MainScreen({super.key, required this.email});
+  const MainScreen({super.key, required this.email});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -22,21 +25,66 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Appname",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-        ),
+        title: Text("Appname",
+            style: robotoTextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: 18.0)
+
+            // TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+            ),
         backgroundColor: Colors.deepPurple,
         actions: [
-          IconButton(
-              onPressed: () {
-                print("Edit Icons Pressed");
-              },
-              icon: const Icon(
-                Icons.edit_rounded,
-                color: Colors.white,
-                size: 24.0,
-              ))
+          if (pageIndex == 2)
+            IconButton(
+                onPressed: () {
+                  print("Edit Icons Pressed");
+                },
+                icon: const Icon(
+                  Icons.edit_rounded,
+                  color: Colors.white,
+                  size: 24.0,
+                )),
+          PopupMenuButton(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Text(
+                    "Delete Account",
+                    style: GoogleFonts.lato(),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'logout',
+                  child: Text(
+                    "Logout",
+                    style: GoogleFonts.lato(),
+                  ),
+                ),
+              ];
+            },
+            onSelected: (String value) {
+              if (value == 'logout') {
+                // pushAndRemoveUntil will clear the stack and
+                // push new screen into the stack
+
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                    (Route<dynamic> route) => false);
+              }
+              if (value == 'delete') {
+                print("Acount deleted");
+              }
+            },
+          )
         ],
       ),
       drawer: Drawer(

@@ -13,7 +13,7 @@ class ProfileScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            "assets/user.jpeg",
+            "assets/images/user.jpeg",
             height: 300,
             width: 300,
             fit: BoxFit.cover,
