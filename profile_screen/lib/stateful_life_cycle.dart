@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProfileStatePage extends StatefulWidget {
+
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -16,6 +18,11 @@ class ProfileState extends State<StatefulWidget> {
     super.initState();
 
     print("================ initState ");
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 
   @override
@@ -45,6 +52,13 @@ class ProfileState extends State<StatefulWidget> {
       ),
     );
   }
+
+  @override
+  void didUpdateWidget(covariant StatefulWidget oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
+
 
   @override
   void deactivate() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profile_screen/screen/login/login_screen.dart';
 import 'package:profile_screen/screen/main/main_screen.dart';
 import 'package:profile_screen/screen/splash/splash_screen.dart';
+import 'package:profile_screen/stateful_life_cycle.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,13 +23,13 @@ class MyApp extends StatelessWidget {
         '/login': (BuildContext context) => LoginScreen(),
         '/splash': (BuildContext context) => const SplashScreen(),
       },
-      initialRoute: '/splash',
+      // initialRoute: '/splash',
       navigatorKey: navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:profile_screen/screen/main/main_screen.dart';
+import 'package:profile_screen/screen/signup/sign_up.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -95,6 +96,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Login",
                     style: TextStyle(color: Colors.white),
                   )),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Dont Have an Account"),
+                SizedBox(
+                  width: 4.0,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUp()));
+                  },
+                  child: Text("Sign up"),
+                ),
+              ],
             )
           ],
         ),
