@@ -358,4 +358,19 @@ class _SignUpState extends State<SignUp> {
 
     return items;
   }
+
+  getCounry() {
+    // Server
+  }
+
+  // Business logic
+  signUp() {
+    // calcultion
+
+    // APi call
+
+    // Locally Save data
+
+    // Naviaget
+  }
 }

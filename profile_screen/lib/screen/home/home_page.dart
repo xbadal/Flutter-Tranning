@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profile_screen/screen/buttons/buttons_screen.dart';
+import 'package:profile_screen/screen/tab_bar/tab_bar_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -74,6 +75,26 @@ class HomePage extends StatelessWidget {
                 style: TextButton.styleFrom(backgroundColor: Colors.deepPurple),
                 child: const Text(
                   "Custom Alert Dialog",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            SizedBox(
+              width: 200,
+              height: 60,
+              child: TextButton(
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>  TabBarScreen()));
+                },
+                style: TextButton.styleFrom(backgroundColor: Colors.deepPurple),
+                child: const Text(
+                  "Tab bar",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
