@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:profile_screen/screen/login/login_screen.dart';
 import 'package:profile_screen/screen/main/main_screen.dart';
 import 'package:profile_screen/screen/splash/splash_screen.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
