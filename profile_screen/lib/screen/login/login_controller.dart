@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:profile_screen/screen/main/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
 
@@ -12,10 +11,15 @@ class LoginController extends GetxController {
 
   RxBool hidePassword = true.obs;
 
-
   int count = 0;
 
 
+  Map ma = {
+    "name": "Badal Kumar",
+    "age": 13,
+    "data": {"name": "Badal Kumar", "age": 13},
+    "list": [1, 2, 3, 4]
+  };
 
   @override
   void onInit() {
@@ -23,12 +27,9 @@ class LoginController extends GetxController {
     checkLogin();
   }
 
-
   togglePassword() {
     hidePassword.value = !hidePassword.value;
   }
-
-
 
   // Check if user already logged in
   checkLogin() async {
@@ -60,7 +61,6 @@ class LoginController extends GetxController {
           textColor: Colors.white,
           fontSize: 16.0);
     } else {
-
       String email = emailController.text;
       emailController.clear();
       passwordController.clear();
@@ -79,9 +79,6 @@ class LoginController extends GetxController {
           backgroundColor: Colors.black,
           textColor: Colors.white,
           fontSize: 16.0);
-
-
-
 
 //
       Get.to(MainScreen(
