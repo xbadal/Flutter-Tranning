@@ -102,6 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (image != null) {
       this.image = File(image.path);
+      print(this.image!.path);
       setState(() {});
     }
   }
