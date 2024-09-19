@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:profile_screen/screen/chat/chat_screen.dart';
@@ -68,10 +69,12 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ];
             },
-            onSelected: (String value) {
+            onSelected: (String value) async {
               if (value == 'logout') {
                 // pushAndRemoveUntil will clear the stack and
                 // push new screen into the stack
+
+                await FirebaseAuth.instance.signOut();
 
                 Navigator.pushAndRemoveUntil(
                     context,

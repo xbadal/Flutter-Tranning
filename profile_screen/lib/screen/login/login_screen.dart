@@ -79,6 +79,13 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
+                TextButton(
+                  onPressed: () => controller.resetPassword(),
+                  child: Text("Reset Password"),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

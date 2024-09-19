@@ -1,9 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:profile_screen/screen/signup/radio_widget.dart';
-import 'package:profile_screen/style/text_style.dart';
+import 'dart:developer';
 
-import 'checkbox_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../main/main_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -29,6 +33,12 @@ class _SignUpState extends State<SignUp> {
   String selectedCounty = '';
 
   double age = 19.0;
+
+  // Firebase Database Instance
+  FirebaseDatabase database = FirebaseDatabase.instanceFor(
+      app: Firebase.app(),
+      databaseURL:
+          "https://profile-screen-b6a84-default-rtdb.asia-southeast1.firebasedatabase.app");
 
   @override
   void initState() {
@@ -73,183 +83,6 @@ class _SignUpState extends State<SignUp> {
                     prefixIcon: Icon(Icons.email),
                     labelText: 'Email',
                     border: OutlineInputBorder()),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      "Gender",
-                      style: robotoTextStyle(),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 3,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: RadioWidget(
-                              value: 0,
-                              groupValue: selectedGender,
-                              onChange: (value) {
-                                setState(() {
-                                  selectedGender = value;
-                                });
-                              },
-                              title: "Male",
-                            ),
-                          ),
-                          Expanded(
-                              child: RadioWidget(
-                            value: 1,
-                            groupValue: selectedGender,
-                            onChange: (value) {
-                              setState(() {
-                                selectedGender = value;
-                              });
-                            },
-                            title: "Female",
-                          )),
-                          Expanded(
-                              child: RadioWidget(
-                            value: 2,
-                            groupValue: selectedGender,
-                            onChange: (value) {
-                              setState(() {
-                                selectedGender = value;
-                              });
-                            },
-                            title: "Others",
-                          )),
-                        ],
-                      ))
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      "Hobbies",
-                      style: robotoTextStyle(),
-                    ),
-                  ),
-                  Expanded(
-                      flex: 3,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: CheckboxWidget(
-                            title: "Cricket",
-                            value: isCricketChecked,
-                            onChange: (value) {
-                              setState(() {
-                                isCricketChecked = value;
-                              });
-                            },
-                          )),
-                          Expanded(
-                              child: CheckboxWidget(
-                            title: "Singing",
-                            value: isSingingChecked,
-                            onChange: (value) {
-                              setState(() {
-                                isSingingChecked = value;
-                              });
-                            },
-                          )),
-                          Expanded(
-                              child: CheckboxWidget(
-                            title: "Dancing",
-                            value: isDanceChecked,
-                            onChange: (value) {
-                              setState(() {
-                                isDanceChecked = value;
-                              });
-                            },
-                          )),
-                        ],
-                      ))
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      "Hobbies",
-                      style: robotoTextStyle(),
-                    ),
-                  ),
-                  Expanded(
-                    child: DropdownButton<String>(
-                        value: selectedCounty,
-                        items: country
-                            .map((c) => DropdownMenuItem(
-                                  value: c,
-                                  child: Text(c),
-                                ))
-                            .toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCounty = value!;
-                          });
-                        }),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Age"),
-                  Slider(
-                      value: age,
-                      min: 18.0,
-                      max: 60.0,
-                      onChanged: (value) {
-                        setState(() {
-                          age = value;
-                        });
-                      })
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Text("Age"),
-                  CupertinoSlider(
-                      value: age,
-                      min: 18.0,
-                      max: 60.0,
-                      thumbColor: Colors.red,
-                      divisions: 10,
-                      onChanged: (value) {
-                        setState(() {
-                          age = value;
-                        });
-                      })
-                ],
-              ),
-              Row(
-                children: [
-                  Text("Salary"),
-                  RangeSlider(
-                      values: RangeValues(18, 40),
-                      min: 18.0,
-                      max: 60.0,
-                      divisions: 10,
-                      onChanged: (value) {})
-                ],
               ),
               const SizedBox(
                 height: 16,
@@ -304,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                         // ScaffoldMessenger.of(context)
                         //     .showSnackBar(SnackBar(content: Text("Enter email")));
                       } else {
-                        _showConfimationPopUp(context);
+                        signUp();
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -364,13 +197,40 @@ class _SignUpState extends State<SignUp> {
   }
 
   // Business logic
-  signUp() {
-    // calcultion
+  signUp() async {
+    String email = emailController.text;
+    String password = passwordController.text;
 
-    // APi call
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    // Locally Save data
+      if (credential.user != null) {
+        Map<String, dynamic> userData = {
+          "email": credential.user!.email,
+        };
 
-    // Naviaget
+        try {
+          DatabaseReference ref = database.ref("users/${credential.user!.uid}");
+
+          await ref.set(userData);
+        } catch (e) {
+          print(e.toString());
+        } finally {
+          Get.to(MainScreen(email: email));
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -12,7 +15,6 @@ class LoginController extends GetxController {
   RxBool hidePassword = true.obs;
 
   int count = 0;
-
 
   Map ma = {
     "name": "Badal Kumar",
@@ -62,30 +64,55 @@ class LoginController extends GetxController {
           fontSize: 16.0);
     } else {
       String email = emailController.text;
-      emailController.clear();
-      passwordController.clear();
+      String password = passwordController.text;
 
-      // Save data using Shared Preferences
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      await prefs.setString('userEmail', email);
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
 
-      // print("Email: ${emailController.text}");
-      // print("Password: ${passwordController.text}");
-      Fluttertoast.showToast(
-          msg: "Login Success",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        emailController.clear();
+        passwordController.clear();
 
-//
-      Get.to(MainScreen(
-        email: email,
-      ));
+        // Save data using Shared Preferences
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userEmail', email);
+
+        // print("Email: ${emailController.text}");
+        // print("Password: ${passwordController.text}");
+
+        Fluttertoast.showToast(
+            msg: "Login Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        Get.to(MainScreen(
+          email: email,
+        ));
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
+      }
 
       print("========================");
+    }
+  }
+
+  resetPassword() async {
+    String email = emailController.text;
+
+    if (email.isNotEmpty) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      } catch (e) {
+        log(e.toString());
+      }
     }
   }
 }
