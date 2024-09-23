@@ -7,7 +7,13 @@ import 'package:profile_screen/screen/splash/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-   );
+      options: FirebaseOptions(
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+  ));
   runApp(const MyApp());
 }
 

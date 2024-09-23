@@ -200,22 +200,23 @@ class _SignUpState extends State<SignUp> {
   signUp() async {
     String email = emailController.text;
     String password = passwordController.text;
+    String name = nameController.text;
 
     try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       if (credential.user != null) {
         Map<String, dynamic> userData = {
           "email": credential.user!.email,
+          "name": name,
+          "age": 15,
+          "hobies": "cricket",
+          "gender": "Male"
         };
 
         try {
           DatabaseReference ref = database.ref("users/${credential.user!.uid}");
-
           await ref.set(userData);
         } catch (e) {
           print(e.toString());
